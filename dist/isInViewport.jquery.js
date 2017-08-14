@@ -40,12 +40,12 @@
     $(window).on('resize scroll', function () {
 
       if (isIn() && _isIn === false) {
-        plugin.cb('entered')
+        plugin.cb.call(plugin.$el, 'entered')
         _isIn = true
       }
 
       if (_isIn === true && !isIn()) {
-        plugin.cb('leaved')
+        plugin.cb.call(plugin.$el, 'leaved')
         _isIn = false
       }
 
