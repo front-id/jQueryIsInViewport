@@ -7,61 +7,65 @@
 !function ($) {
   'use strict'
 
-  var plugin
-
   var Class = function (el, cb) {
-    plugin = this
-    this.$el = $(el)
-    this.cb = cb
-    watch()
-    return this
-  }
+    this.$el = $(el);
+    this.cb = cb;
+    this.watch();
+    return this;
+  };
 
-  /**
-   * Checks if the element is in.
-   *
-   * @returns {boolean}
-   */
-  function isIn () {
-    var $win = $(window)
-    var elementTop = plugin.$el.offset().top
-    var elementBottom = elementTop + plugin.$el.outerHeight()
-    var viewportTop = $win.scrollTop()
-    var viewportBottom = viewportTop + $win.height()
-    return elementBottom > viewportTop && elementTop < viewportBottom
-  }
+  Class.prototype = {
 
-  /**
-   * Launch a callback indicating when the element is in and when is out.
-   */
-  function watch () {
-    var _isIn = false
+    /**
+     * Checks if the element is in.
+     *
+     * @returns {boolean}
+     */
+    isIn: function isIn() {
+      var _self = this;
+      var $win = $(window);
+      var elementTop = _self.$el.offset().top;
+      var elementBottom = elementTop + _self.$el.outerHeight();
+      var viewportTop = $win.scrollTop();
+      var viewportBottom = viewportTop + $win.height();
+      return elementBottom > viewportTop && elementTop < viewportBottom;
+    },
 
-    $(window).on('resize scroll', function () {
+    /**
+     * Launch a callback indicating when the element is in and when is out.
+     */
+    watch: function () {
+      var _self = this;
+      var _isIn = false;
 
-      if (isIn() && _isIn === false) {
-        plugin.cb.call(plugin.$el, 'entered')
-        _isIn = true
-      }
+      $(window).on('resize scroll', function () {
 
-      if (_isIn === true && !isIn()) {
-        plugin.cb.call(plugin.$el, 'leaved')
-        _isIn = false
-      }
+        if (_self.isIn() && _isIn === false) {
+          _self.cb.call(_self.$el, 'entered');
+          _isIn = true;
+        }
 
-    })
-  }
+        if (_isIn === true && !_self.isIn()) {
+          _self.cb.call(_self.$el, 'leaved');
+          _isIn = false;
+        }
+
+      })
+    }
+
+
+  };
 
   // jQuery plugin.
   //-----------------------------------------------------------
   $.fn.isInViewport = function (cb) {
     return this.each(function () {
-      var $element = $(this)
-      var data = $element.data('isInViewport')
+      var $element = $(this);
+      var data = $element.data('isInViewport');
       if (!data) {
-        $element.data('isInViewport', (new Class(this, cb)))
+        $element.data('isInViewport', (new Class(this, cb)));
       }
     })
   }
 
-}(window.jQuery)
+}(window.jQuery);
