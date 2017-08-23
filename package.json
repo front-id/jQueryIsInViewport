@@ -1,6 +1,6 @@
 {
   "name": "jquery-is-in-viewport",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React when an element is in the viewport.",
   "main": "isInViewport.jquery.js",
   "repository": "https://github.com/frontid/jQueryIsInViewport.git",
