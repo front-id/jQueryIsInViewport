@@ -8,12 +8,12 @@ You need throw confetti when the user scroll and see an element?, so this plugin
 npm install jquery-is-in-viewport --save
 // or
 yarn add jquery-is-in-viewport
-// or 
-bower install jquery-is-in-viewport
 ```
 
 ## Usage
 ```javascript
+const offset = 100;
+
 $('.block').isInViewport(function (status) {
   if (status === 'entered') {
     $(this).addClass('throw-confetti')
@@ -22,8 +22,9 @@ $('.block').isInViewport(function (status) {
   if (status === 'leaved') {
     $(this).removeClass('throw-confetti')
   }
-})
+}, offset)
 ```
 
 ## Options
 Status can be '**entered**' or '**leaved**'.
+

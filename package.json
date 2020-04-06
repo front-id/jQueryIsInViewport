@@ -1,13 +1,16 @@
 {
   "name": "jquery-is-in-viewport",
-  "version": "1.0.3",
-  "description": "React when an element is in the viewport.",
+  "version": "1.0.4",
+  "scripts": {
+    "build": "gulp build"
+  },
+  "description": "Reacts when an element is in the viewport.",
   "main": "isInViewport.jquery.js",
   "repository": "https://github.com/frontid/jQueryIsInViewport.git",
   "author": "capynet <marcelo@front.id>",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "*",
-    "gulp-minify": "^1.0.0"
+    "gulp": "^4.0.2",
+    "gulp-minify": "^3.1.0"
   }
 }
