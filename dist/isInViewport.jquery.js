@@ -12,7 +12,14 @@
     this.$el = $(el);
     this.cb = cb;
     this.offset = offset;
+    this.previousIsInState = false;
+
+    // Make the first check
+    this.check();
+
+    // Start watching.
     this.watch();
+
     return this;
   };
 
@@ -23,7 +30,7 @@
      *
      * @returns {boolean}
      */
-    isIn: function isIn() {
+    isIn: function () {
       const _self = this;
       const $win = $(window);
       const elementTop = _self.$el.offset().top - _self.offset;
@@ -38,20 +45,24 @@
      */
     watch: function () {
       const self = this;
-      let isIn = false;
+      $(window).on('resize scroll', self.check.bind(self));
+    },
 
-      $(window).on('resize scroll', function () {
+    /**
+     * Checks if the element is on in the viewport.
+     */
+    check: function () {
+      const self = this;
 
-        if (self.isIn() && isIn === false) {
-          self.cb.call(self.$el, 'entered');
-          isIn = true;
-        }
+      if (self.isIn() && self.previousIsInState === false) {
+        self.cb.call(self.$el, 'entered');
+        self.previousIsInState = true;
+      }
 
-        if (isIn === true && !self.isIn()) {
-          self.cb.call(self.$el, 'leaved');
-          isIn = false;
-        }
-      })
+      if (self.previousIsInState === true && !self.isIn()) {
+        self.cb.call(self.$el, 'leaved');
+        self.previousIsInState = false;
+      }
     }
   };
 
